@@ -1,5 +1,4 @@
 import pygame
-from random import randint
 from rules import *
 from widgets import Button
 
@@ -11,29 +10,7 @@ pygame.display.set_icon(screen)
 pygame.display.set_caption('')
 clock, fps = pygame.time.Clock(), 30
 
-# region generate grid
-def generate_grid(fill=50):
-    resolution = 50
-    grid = []
-    for y in range(resolution):
-        temp = []
-        for x in range(resolution):
-
-            if x in [0, resolution-1] or y in [0, resolution-1]:
-                state = False
-            else:
-                if randint(0, 100) <= fill:
-                    state = True
-                else:
-                    state = False
-
-            temp.append(state)
-
-        grid.append(temp)
-    return grid
-
 grid = generate_grid()
-#endregion
 
 class Rect():
     def __init__(self, x, y, w, h, xy_index):
@@ -54,7 +31,7 @@ btn_counter_lock = 0
 frames_to_wait = 5
 
 y = 50
-pause_btn = Button(600, y, 300, 50, text='Pause/Unpause', surface_to_draw_to=screen) ; pause = False
+pause_btn = Button(600, y, 300, 50, text='Pause', surface_to_draw_to=screen) ; pause = False
 y += 75
 randomise_btn = Button(600, y, 300, 50, text='Randomise Field', surface_to_draw_to=screen)
 y += 75
@@ -63,7 +40,6 @@ y += 75
 fill_btn = Button(600, y, 300, 50, text='Fill Field', surface_to_draw_to=screen)
 y += 75
 draw_grid_btn = Button(600, y, 300, 50, text='Toggle Grid', surface_to_draw_to=screen) ; draw_grid = False
-
 
 while True:
     #region events
@@ -79,6 +55,9 @@ while True:
     screen.fill([51, 51, 51])
 
     # region buttons
+
+    if pause : pause_btn.main_color = [50, 100, 50] ; pause_btn.text = 'Unpause'
+    else:      pause_btn.main_color = [255, 255, 255] ; pause_btn.text = 'Pause'
 
     pause_btn.show()
     if pause_btn.update(mouse_pos, mouse_pressed) and btn_counter_lock == 0:
@@ -110,7 +89,7 @@ while True:
 
     #region grid management
     if not pause:
-        grid = run_single_step(grid.copy())
+        grid = run_single_step(grid)
 
     w = (size[0]/2) / len(grid[0])
     h = size[1] / len(grid)

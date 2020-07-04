@@ -1,3 +1,24 @@
+from random import randint
+
+def generate_grid(fill=50):
+    resolution = 50
+    grid = []
+    for y in range(resolution):
+        temp = []
+        for x in range(resolution):
+
+            if x in [0, resolution-1] or y in [0, resolution-1]:
+                state = False
+            else:
+                if randint(0, 100) <= fill:
+                    state = True
+                else:
+                    state = False
+
+            temp.append(state)
+
+        grid.append(temp)
+    return grid
 
 def ConwaysGameOfLifeRule(current, num_neighbours):
     """
@@ -19,15 +40,15 @@ def ConwaysGameOfLifeRule(current, num_neighbours):
             return True
 
 def run_single_step(grid, rule=ConwaysGameOfLifeRule):
-    temp = grid
+    temp = generate_grid(0)
     for y in range(1, len(grid) - 1):
         for x in range(1, len(grid[0]) - 1):
             state = grid[y][x]
             n = [
-                bool(grid[y-1][x]),
-                bool(grid[y+1][x]),
-                bool(grid[y][x-1]),
-                bool(grid[y][x+1]),
+                bool(grid[y-1][x  ]),
+                bool(grid[y+1][x  ]),
+                bool(grid[y  ][x-1]),
+                bool(grid[y  ][x+1]),
                 bool(grid[y-1][x-1]),
                 bool(grid[y+1][x+1]),
                 bool(grid[y-1][x+1]),
