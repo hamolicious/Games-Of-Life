@@ -1,6 +1,8 @@
 # Games-Of-Life
 A WIP Games Of Life simulator written with Python and PyGame
 
+<img src="https://raw.githubusercontent.com/hamolicious/Games-Of-Life/master/Capture.PNG?token=ANSOQSR7KYKDJJZLSHTJZZ27AB5ZW">
+
 <strong>Required</strong><br>
 Python 2.7-3.8<br>
 Pygame 2.0.0.dev6<br>
